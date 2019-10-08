@@ -4,9 +4,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Stringtest {
+
+    private String str;
 
     @BeforeAll
     static void beforeAll(){
@@ -85,6 +89,36 @@ public class Stringtest {
     @CsvSource(value = {"abcd, ABCD","abc, ABC","'',''"})
     void uppercase(String word, String capitalizedword) {
         assertEquals(capitalizedword, word.toUpperCase());
+    }
+
+    @Test
+    void performanceTest(){
+        assertTimeout(Duration.ofSeconds(5),()->{
+            for (int i = 0; i <= 1000000; i++) {
+                int j=i;
+                System.out.println(j);
+            }
+        });
+    }
+
+    @Nested
+    @DisplayName("For an empty STRING")
+    class EmptyStringTests{
+        @BeforeEach
+        void setToEmpty(){
+            str = "";
+        }
+
+        @Test
+        @DisplayName("LENGTH SHOULD BE ZERO")
+        void lengthIsZero(){
+            assertEquals(0, str.length());
+        }
+
+        @Test
+        void upperIsEmpty(){
+            assertEquals("", str.toUpperCase());
+        }
     }
 
 }
